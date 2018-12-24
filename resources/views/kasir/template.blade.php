@@ -11,8 +11,7 @@
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons|Caveat" />
-  
+  <link href="{{ asset('font-awesome/css/all.css') }} " rel="stylesheet">
   <!-- CSS Files -->
   <link href="{{ asset('material/assets/css/material-dashboard.css?v=2.1.0') }} " rel="stylesheet" />
   <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
@@ -44,19 +43,19 @@
             }
           @endphp">
             <a class="nav-link" href="{{route('dashboard.kasir')}}">
-              <i class="material-icons">dashboard</i>
+              <i class="fas fa-cash-register"></i>
               <p>Dashboard</p>
             </a>
           </li>
           <li class="nav-item  {{ Request::segment(2) === 'transaksi-kasir' ? 'active' : null }}">
             <a class="nav-link" href="{{route('transaksi.kasir')}}">
-              <i class="material-icons">account_balance_wallet</i>
+              <i class="fas fa-list"></i>
               <p>Transaksi</p>
             </a>
           </li>
           <li class="nav-item active-pro ">
             <a class="nav-link" href="#logout" data-toggle="modal">
-              <i class="material-icons">open_in_new</i>
+              <i class="fas fa-logout"></i>
               <p>Logout</p>
             </a>
           </li>
@@ -83,7 +82,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="">
                   username
-                  <i class="material-icons">person_pin_circle</i>
+                  <i class="fas fa-user-circle"></i>
                 </a>
               </li>
               <!-- your navbar here -->

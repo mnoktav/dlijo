@@ -87,7 +87,7 @@
 								{{$satuan}}
 			  					</td>
 			  					<td>
-			  						<a href="{{ route('addtocart.kasir',$produk->id_produk) }}" class="btn btn-success btn-sm">+</i></a>
+			  						<a href="{{ route('addtocart.kasir',$produk->id_produk) }}" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i></a>
 			  					</td>
 			  				</tr>
 			  				@endforeach
@@ -159,8 +159,8 @@
 	                      			<input type="hidden" name="subtotal[]" value="{{$sub}}">
 	                      		</td>
 	                      		<td>
-	                      			<button class="btn btn-info btn-sm update-cart" data-id="{{ $id }}"><i class="material-icons">loop</i></button>
-	                      			<button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><i class="material-icons">delete</i></button>
+	                      			<button class="btn btn-info btn-sm update-cart" data-id="{{ $id }}"><i class="fas fa-sync-alt"></i></button>
+	                      			<button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><i class="fas fa-trash"></i></button>
 	                      		</td>
 	                      	</tr>
 	                      		@endforeach

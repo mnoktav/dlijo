@@ -11,7 +11,7 @@
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons|Caveat" />
+  <link href="{{ asset('font-awesome/css/all.css') }} " rel="stylesheet">
   
   <!-- CSS Files -->
   <link href="{{ asset('material/assets/css/material-dashboard.css?v=2.1.0') }} " rel="stylesheet" />
@@ -33,17 +33,6 @@
             <span class="navbar-toggler-icon icon-bar"></span>
             <span class="navbar-toggler-icon icon-bar"></span>
           </button>
-          <div class="collapse navbar-collapse justify-content-end">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="">
-                  username
-                  <i class="material-icons">person_pin_circle</i>
-                </a>
-              </li>
-              <!-- your navbar here -->
-            </ul>
-          </div>
         </div>
       </nav>
       <!-- End Navbar -->
