@@ -36,12 +36,6 @@
           </button>
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="">
-                  username
-                  <i class="material-icons">person_pin_circle</i>
-                </a>
-              </li>
               <!-- your navbar here -->
             </ul>
           </div>

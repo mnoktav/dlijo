@@ -18,13 +18,13 @@
 	    -->
 	    <li class="nav-item" style="background-color: white; border-radius: 5px; margin-right: 1%;">
 	        <a class="nav-link active" href="#berhasil" role="tab" data-toggle="tab">
-	            <i class="material-icons">done_all</i>
-	            Transaksi Sukses
+	            <i class="fas fa-check-square" style="color: green"></i>
+	             Transaksi Sukses
 	        </a>
 	    </li>
 	    <li class="nav-item" style="background-color: white; border-radius: 5px;">
 	        <a class="nav-link" href="#gagal" role="tab" data-toggle="tab">
-	            <i class="material-icons">clear</i>
+	            <i class="fas fa-window-close" style="color: red"></i>
 	            Transaksi Batal
 	        </a>
 	    </li>
@@ -64,7 +64,7 @@
 						            <td>Rp {{number_format($key->total_bayar,0,'.','.')}}</td>
 						            <td>
 						                <a href="{{ route('detailtransaksi.kasir',$key->nomor_nota) }}" class="btn btn-info btn-sm" target="_blank">
-						                    <i class="material-icons">info</i>
+						                    <i class="fas fa-info"></i>
 						                </a>
 						            </td>
 						        </tr>
@@ -104,7 +104,7 @@
 						            <td>Rp {{number_format($key->total_bayar,0,'.','.')}}</td>
 						            <td>
 						                <a href="{{ route('detailtransaksi.kasir',$key->nomor_nota) }}" class="btn btn-info btn-sm" target="_blank">
-						                    <i class="material-icons">info</i>
+						                    <i class="fas fa-info"></i>
 						                </div>
 						            </td>
 						        </tr>

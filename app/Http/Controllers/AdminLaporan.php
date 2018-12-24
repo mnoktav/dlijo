@@ -41,9 +41,14 @@ class AdminLaporan extends Controller
     		->get();
 
     	//chart
-    	if ($jumlah>1) {
-    		$view_produk = DB::table('produk')
-	            ->where('status', 1)
+    	if ($jumlah>=1) {
+    		$view_produk = DB::table('view_penjualan')
+    			->select('nama_produk', DB::raw('SUM(jumlah) as jumlah'),'id_produk')
+	            ->where([
+	            	['status', 1],
+	            	['jumlah','>',0],
+	            ])
+	            ->groupBy('id_produk')
 	            ->get();
 	        $chart2 = new Sample;
 	        $chart2->labels([$months[$bulan_b-1].' '.$tahun_t]);
@@ -59,7 +64,7 @@ class AdminLaporan extends Controller
 	        }
     	}
     	else{
-    		$chart2 =0;
+    		$chart2 = 0;
     	}
 
     	$jumlah_transaksi = DB::table('transaksi_penjualan')

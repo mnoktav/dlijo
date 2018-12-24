@@ -11,8 +11,7 @@
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons|Caveat|Satisfy" />
-  
+  <link href="{{ asset('font-awesome/css/all.css') }} " rel="stylesheet">
   
   <!-- CSS Files -->
   <link href="{{ asset('material/assets/css/material-dashboard.css?v=2.1.0') }} " rel="stylesheet" />
@@ -45,44 +44,38 @@
             }
           @endphp">
             <a class="nav-link" href="{{route('dashboard.admin')}}">
-              <i class="material-icons">dashboard</i>
+              <i class="fas fa-tachometer-alt"></i>
               <p>Dashboard</p>
             </a>
           </li>
           <li class="nav-item  {{ Request::segment(2) === 'produk-admin' ? 'active' : null }}">
             <a class="nav-link" href="{{route('produk.admin')}}">
-              <i class="material-icons">loyalty</i>
+              <i class="fas fa-tag"></i>
               <p>Produk</p>
             </a>
           </li>
           <li class="nav-item  {{ Request::segment(2) === 'supplier-admin' ? 'active' : null }}">
             <a class="nav-link" href="{{route('supplier.admin')}}">
-              <i class="material-icons">recent_actors</i>
+              <i class="fas fa-truck"></i>
               <p>Supplier</p>
             </a>
           </li>
           <li class="nav-item  {{ Request::segment(2) === 'pembelian-admin' ? 'active' : null }}">
             <a class="nav-link" href="{{route('pembelian.admin')}}">
-              <i class="material-icons">attach_money</i>
+              <i class="fas fa-sign-out-alt"></i>
               <p>Data Pembelian</p>
             </a>
           </li>
           <li class="nav-item  {{ Request::segment(2) === 'penjualan-admin' ? 'active' : null }}">
             <a class="nav-link" href="{{route('penjualan.admin')}}">
-              <i class="material-icons">account_balance_wallet</i>
+              <i class="fas fa-sign-in-alt"></i>
               <p>Data Penjualan</p>
             </a>
           </li>
           <li class="nav-item  {{ Request::segment(2) === 'laporan-admin' ? 'active' : null }}">
             <a class="nav-link" href="{{route('laporan.admin')}}">
-              <i class="material-icons">timeline</i>
+              <i class="fas fa-tasks"></i>
               <p>Laporan</p>
-            </a>
-          </li>
-          <li class="nav-item active-pro ">
-            <a class="nav-link" href="#logout" data-toggle="modal">
-              <i class="material-icons">open_in_new</i>
-              <p>Logout</p>
             </a>
           </li>
           <!-- your sidebar here -->
@@ -92,8 +85,8 @@
 
     <div class="main-panel">
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
-        <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " style="padding: 1rem;">
+        <div class="container-fluid" style="border-bottom: 1px solid #d7d9dd ;">
           <div class="navbar-wrapper">
             @yield('navbar')
           </div>
@@ -108,7 +101,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="">
                   username
-                  <i class="material-icons">person_pin_circle</i>
+                  <i class="fas fa-user-circle"></i>
                 </a>
               </li>
               <!-- your navbar here -->

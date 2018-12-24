@@ -26,7 +26,7 @@
 	          <div class="card card-stats">
 	            <div class="card-header card-header-info card-header-icon">
 	              <div class="card-icon">
-	                <i class="material-icons">store</i>
+	                <i class="fas fa-store"></i>
 	              </div>
 	              <p class="card-category">Transaksi Hari Ini</p>
 	              <h3 class="card-title"> {{$transaksi_hari_ini}} Transaksi<br> Sukses  </h3>
@@ -39,9 +39,9 @@
 	          <div class="card card-stats">
 	            <div class="card-header card-header-warning card-header-icon">
 	              <div class="card-icon">
-	                <i class="material-icons">warning</i>
+	                <i class="fas fa-exclamation-triangle"></i>
 	              </div>
-	              <p class="card-category">Transaksi Batal Hari Ini</p>
+	              <p class="card-category">T. Batal Hari Ini</p>
 	              <h3 class="card-title"> {{$batal}} Transaksi<br> Batal  </h3>
 	            </div>
 	            <div class="card-footer">
@@ -52,7 +52,7 @@
 	          <div class="card card-stats">
 	            <div class="card-header card-header-success card-header-icon">
 	              <div class="card-icon">
-	                <i class="material-icons">attach_money</i>
+	                <i class="fas fa-money-check-alt"></i>
 	              </div>
 	              <p class="card-category">Pemasukan Bulan Ini</p>
 	              <h3 class="card-title">Rp <br>{{number_format($pemasukanperbulan,0,'.','.')}}</h3>
@@ -65,7 +65,7 @@
 	          <div class="card card-stats">
 	            <div class="card-header card-header-danger card-header-icon">
 	              <div class="card-icon">
-	                <i class="material-icons">loyalty</i>
+	                <i class="fas fa-tags"></i>
 	              </div>
 	              <p class="card-category">Total Produk</p>
 	              <h3 class="card-title" style="text-transform: capitalize;">
