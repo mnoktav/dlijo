@@ -28,8 +28,6 @@ class AdminProduk extends Controller
     }
     public function AddProduk(Request $request)
     { 	
-    	
-
     	if(isset($request->submit)){
     		if(isset($request->gambar)){
 	    		$this->validate($request, [

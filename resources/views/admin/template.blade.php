@@ -72,8 +72,10 @@
               <p>Data Penjualan</p>
             </a>
           </li>
-          <li class="nav-item  {{ Request::segment(2) === 'laporan-admin' ? 'active' : null }}">
-            <a class="nav-link" href="{{route('laporan.admin')}}">
+          <li class="nav-item  @if (Request::segment(2) == 'laporan-admin' || Request::segment(2) == 'laporan-admin-harian')
+            {{'active'}}
+          @endif ">
+            <a class="nav-link" href="{{route('laporanharian.admin')}}">
               <i class="fas fa-tasks"></i>
               <p>Laporan</p>
             </a>
@@ -177,6 +179,8 @@
     {!! $chart3->script() !!}
   @elseif(Request::segment(2)=='laporan-admin' && $jumlah>1)
     {!! $chart_laporan->script() !!}
+  @elseif(Request::segment(2)=='laporan-admin-harian' && $jumlah>1)
+    {!! $chart_laporan_harian->script() !!}
   @endif
   
   <script>
