@@ -114,6 +114,11 @@
 				          <h4 class="card-title">Produk Terjual Harian</h4>
 				          {!! $chart2->container() !!}
 				        </div>
+				        <div class="row" style="margin-bottom: 1rem;">
+				        	<div class="col-md-3 offset-md-9">
+				        		Lihat Detail <a href="{{ route('laporanharian.admin') }}">Disini</a>
+				        	</div>
+				        </div>
 				    </div>
 			  	</div>
 		    </div>

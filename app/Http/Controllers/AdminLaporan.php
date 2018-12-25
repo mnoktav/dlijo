@@ -131,18 +131,13 @@ class AdminLaporan extends Controller
 	                ->where('status',1)
 	                ->avg('total_bayar');
 
-	    $view_produk = DB::table('produk')
+	    $view_produk = DB::table('view_penjualan')
+	    		->select('id_produk','nama_produk',DB::raw('SUM(jumlah) as jumlah, SUM(subtotal2) as total'))
+	    		->whereMonth('created_at', $request->bulan)
+	            ->whereYear('created_at', $request->tahun)
 	            ->where('status', 1)
+				->groupBy('id_produk')
 	            ->get();
-        for($i=0; $i<count($view_produk->pluck('id_produk')); $i++){
-        	for ($o=0; $o<1 ; $o++) { 
-        		$produk_terjual[$o] = DB::table('view_penjualan')
-                ->whereMonth('created_at', $request->bulan)
-                ->whereYear('created_at', $request->tahun)
-                ->where('id_produk',$view_produk->pluck('id_produk')[$i])
-                ->sum('jumlah');
-        	}
-        }
     	if($request->download == 'pdf'){
     		$output = '
 		    <h3 align="center">Laporan Penjualan Bulan '.$months[$request->bulan-1].' '.$request->tahun.' </h3><br>
@@ -164,16 +159,35 @@ class AdminLaporan extends Controller
 			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">'.$detail->nomor_nota.'</td>
 			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px; text-transform:capitalize;">'.$detail->nama_produk.'</td>
 			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">'.$detail->jumlah.'</td>
-			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">Rp '.number_format($detail->subtotal2,0,'.','.').'</td>
-			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">'.number_format($detail->potongan_harga,0,'.','.').'</td>
 			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">Rp '.number_format($detail->subtotal,0,'.','.').'</td>
+			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">Rp '.number_format($detail->potongan_harga,0,'.','.').'</td>
+			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">Rp '.number_format($detail->subtotal2,0,'.','.').'</td>
 			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">'.date('d F Y h:i',strtotime($detail->created_at)).'</td>
+		      	</tr>
+		    	';
+		    }
+		     $output .= '</table> <br><br>';
+		    
+		    $output .= '<h3 align="center">Data Produk Terjual Bulan '.$months[$request->bulan-1].' '.$request->tahun.' </h3><br>
+		    <table width="100%" style="border-collapse: collapse; border: 0px;">
+		    	<tr>
+				    <th align="center" style="border: 1px solid; padding:10px; background-color:#c6dcff;">Produk</th>
+				    <th align="center" style="border: 1px solid; padding:10px;background-color:#c6dcff;">Jumlah</th>
+				    <th align="center" style="border: 1px solid; padding:10px;background-color:#c6dcff;">Total Harga</th>
+			   	</tr>
+			';
+			foreach($view_produk as $produk)
+		    {
+		    $output .= '
+		      	<tr>
+			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px; text-transform:capitalize;">'.$produk->nama_produk.'</td>
+			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">'.$produk->jumlah.'</td>
+			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">Rp '.number_format($produk->total,0,'.','.').'</td>
 		      	</tr>
 		    	';
 		    }
 		    $output .= '</table>';
 		    $output .= '
-				<br>
 				<br>
 				<br>
 				<table width="100%" style="border-collapse: collapse; border: 0px;">
@@ -199,7 +213,9 @@ class AdminLaporan extends Controller
 			';
 			$output .= '
 				</table>
+				<br>
 		    ';
+
 		    
 	    	$pdf = \App::make('dompdf.wrapper');
 		    $pdf->loadHTML($output);
