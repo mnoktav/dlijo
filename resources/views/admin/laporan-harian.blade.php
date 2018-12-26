@@ -44,7 +44,7 @@
 						</form>
 					</div>
 				</div>
-				@if ($jumlah > 0 && isset($get_tanggal))
+				@if ($jumlah >= 0 && isset($get_tanggal))
 				<div class="card card-nav-tabs">
 					<div class="card-body">
 						<div class="row">

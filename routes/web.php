@@ -41,6 +41,8 @@ Route::post('/admin/produk-admin/add-kategori', 'AdminProduk@AddKategori')->name
 Route::post('/admin/produk-admin/add', 'AdminProduk@AddProduk')->name('addproduk.admin');
 Route::post('/admin/produk-admin/delete', 'AdminProduk@DeleteProduk')->name('deleteproduk.admin');
 Route::post('/admin/produk-admin/update', 'AdminProduk@UpdateProduk')->name('updateproduk.admin');
+Route::get('/admin/produk-admin/update-stok', 'AdminProduk@CekStok')->name('cekstok.admin');
+Route::post('/admin/produk-admin/update-stok-produk', 'AdminProduk@UpdateStok')->name('updatestok.admin');
 // supplier
 Route::get('/admin/supplier-admin', 'AdminSupplier@index')->name('supplier.admin');
 Route::post('/admin/supplier-admin/add', 'AdminSupplier@AddSupplier')->name('addsupplier.admin');
@@ -59,3 +61,4 @@ Route::get('/admin/pembelian-admin', 'AdminPembelian@index')->name('pembelian.ad
 Route::post('/admin/pembelian-admin/add-pembelian', 'AdminPembelian@AddPembelian')->name('addpembelian.admin');
 Route::get('/admin/pembelian-admin/detail-pembelian/{id_pembelian}', 'AdminPembelian@DetailPembelian')->name('detailpembelian.admin');
 Route::post('/admin/pembelian-admin/detail-pembelian/update', 'AdminPembelian@UpdatePembelian')->name('updatepembelian.admin');
+Route::post('/admin/pembelian-admin/hapus', 'AdminPembelian@DeletePembelian')->name('deletepembelian.admin');

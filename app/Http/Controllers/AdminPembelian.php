@@ -9,30 +9,31 @@ class AdminPembelian extends Controller
 {
     public function index()
     {
-    	$produk = DB::table('produk')
-            ->where('status', 1)
-            ->get();
-        $supplier = DB::table('supplier')
-        	->where('status', 1)
-        	->get();
-        $pembelian = DB::table('transaksi_pembelian')
-            ->join('supplier', 'transaksi_pembelian.id_supplier', '=', 'supplier.id_supplier')
-            ->join('produk','transaksi_pembelian.id_produk', '=', 'produk.id_produk')
-            ->select('transaksi_pembelian.*', 'produk.nama_produk','produk.satuan','supplier.nama_supplier')
-            ->get();
-
+    	$data_pengeluaran = DB::table('transaksi_pembelian')
+    					->where('status',1)
+    					->orderBy('tanggal', 'DESC')
+    					->get();
+    	$pengeluaranh = DB::table('transaksi_pembelian')
+    					->where('status',1)
+    					->whereDate('tanggal', date('Y-m-d'))
+    					->sum('total');
+    	$pengeluaranb = DB::table('transaksi_pembelian')
+    					->where('status',1)
+    					->whereMonth('tanggal', date('m'))
+    					->whereYear('tanggal', date('Y'))
+    					->sum('total');
     	$data = 'Data Pembelian';
     	return view('admin/pembelian',[
     		'data' => $data,
-    		'produk' => $produk,
-    		'supplier' => $supplier,
-    		'pembelian' => $pembelian
+    		'data_pengeluaran' => $data_pengeluaran,
+    		'pengeluaranh' => $pengeluaranh,
+    		'pengeluaranb' => $pengeluaranb
     	]);
     }
     public function AddPembelian(Request $request)
     {
     	if(isset($request->submit)){
-    		if(isset($request->supplier) && isset($request->produk)){
+    		if(isset($request->tanggal) && isset($request->total)){
     			if(isset($request->gambar)){
 	    		$this->validate($request, [
 	            	'gambar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
@@ -42,10 +43,7 @@ class AdminPembelian extends Controller
 	        	$request->gambar->move(public_path('img'), $gambar);
 
 		    	DB::table('transaksi_pembelian')->insert([
-				    'id_produk' => $request->produk,
-				    'id_supplier' => $request->supplier,
-				    'total_bayar' => $request->total_bayar,
-				    'jumlah' => $request->jumlah,
+				    'total' => $request->total,
 				    'tanggal' => $request->tanggal,
 				    'bukti_pembayaran' => $gambar,
 				    'keterangan' => $request->keterangan,
@@ -58,10 +56,7 @@ class AdminPembelian extends Controller
 	    	else{
 	    		
 	    		DB::table('transaksi_pembelian')->insert([
-	    			'id_produk' => $request->produk,
-				    'id_supplier' => $request->supplier,
-				    'total_bayar' => $request->total_bayar,
-				    'jumlah' => $request->jumlah,
+	    			'total' => $request->total,
 				    'tanggal' => $request->tanggal,
 				    'keterangan' => $request->keterangan,
 				    'created_at' => NOW(),
@@ -72,7 +67,7 @@ class AdminPembelian extends Controller
 	    		}
     		}
     		else{
-    			return redirect()->route('pembelian.admin')->with('error','Produk atau Supplier tidak boleh kosong!');
+    			return redirect()->route('pembelian.admin')->with('error','Tanggal dan Total Pengeluaran tidak boleh kosong!');
     		}
     		
     	}
@@ -95,10 +90,7 @@ class AdminPembelian extends Controller
 		    	DB::table('transaksi_pembelian')
 		    		->where('id_pembelian', $request->id_pembelian)
 		    		->update([
-					    'id_produk' => $request->produk,
-					    'id_supplier' => $request->supplier,
-					    'total_bayar' => $request->bayar,
-					    'jumlah' => $request->jumlah,
+					    'total' => $request->total,
 					    'tanggal' => $request->tanggal,
 					    'bukti_pembayaran' => $gambar,
 					    'keterangan' => $request->keterangan
@@ -109,10 +101,7 @@ class AdminPembelian extends Controller
 	    		DB::table('transaksi_pembelian')
 		    		->where('id_pembelian', $request->id_pembelian)
 		    		->update([
-					    'id_produk' => $request->produk,
-					    'id_supplier' => $request->supplier,
-					    'total_bayar' => $request->bayar,
-					    'jumlah' => $request->jumlah,
+					    'total' => $request->total,
 					    'tanggal' => $request->tanggal,
 					    'keterangan' => $request->keterangan
 					]);
@@ -123,24 +112,27 @@ class AdminPembelian extends Controller
 
     public function DetailPembelian($id)
     {
-    	$produk = DB::table('produk')
-            ->where('status', 1)
-            ->get();
-        $supplier = DB::table('supplier')
-        	->where('status', 1)
-        	->get();
     	$pembelian = DB::table('transaksi_pembelian')
-            ->join('produk', 'transaksi_pembelian.id_produk', '=', 'produk.id_produk')
-            ->join('supplier', 'transaksi_pembelian.id_supplier', '=', 'supplier.id_supplier')
-            ->select('transaksi_pembelian.*', 'produk.nama_produk', 'supplier.nama_supplier')
-            ->where('id_pembelian',$id)
-            ->get();
-    	$data = 'Detail Pembelian';
+    					->where([
+    						['status',1],
+    						['id_pembelian',$id]
+    					])
+    					->get();
+    	$data = 'Detail Pengeluaran';
     	return view('admin/detail-pembelian',[
     		'data' => $data,
-    		'pembelian' => $pembelian,
-    		'produk' => $produk,
-    		'supplier' => $supplier
+    		'pembelian' => $pembelian
     	]);
+    }
+    public function DeletePembelian(Request $request)
+    {
+    	if($request->hapus != null){
+    		DB::table('transaksi_pembelian')
+		    		->where('id_pembelian', $request->id_pembelian)
+		    		->update([
+					    'status' => 0
+					]);
+    	}
+    	return redirect()->route('pembelian.admin')->with('success','Berhasil Hapus Data!');
     }
 }

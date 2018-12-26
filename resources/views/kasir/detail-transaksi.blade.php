@@ -34,7 +34,7 @@
 		    				<td width="70">Status</td>
 		    				<td width="10">:</td>
 		    				<td>@if ($nota->status=='1')
-		    					<p style="background-color: green;">Lunas</p>
+		    					{{'Lunas'}}
 		    				@else
 		    				{{'Batal'}}
 		    				@endif</td>

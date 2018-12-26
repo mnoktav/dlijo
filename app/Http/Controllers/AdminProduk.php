@@ -138,4 +138,32 @@ class AdminProduk extends Controller
         	return redirect()->route('produk.admin')->with('success','Kategori Berhasil Dihapus!');
         }
     }
+    public function CekStok()
+    {
+        $cek = DB::table('produk')
+            ->where('status',1)
+            ->get();
+        return view('admin/cek-stok',[
+            'cek' => $cek,
+            'data'=> 'Update Stok'
+        ]);
+    }
+    public function UpdateStok(Request $request)
+    {
+        if($request->submit != null){
+            for($i=0;$i<count($request->id_produk);$i++){
+                if($request->stok[$i] != $request->update_stok[$i]){
+                   DB::table('produk')
+                    ->where('id_produk', $request->id_produk[$i])
+                    ->update([
+                    'stok' => $request->update_stok[$i],
+                    'update_stok' => $request->update_stok[$i],
+                    'update_stok_at' => NOW(),
+                    'updated_at' => NOW()
+                    ]); 
+                }
+            }
+            return redirect()->back()->with('success','Stok Berhasil Diupdate!');
+        }
+    }
 }

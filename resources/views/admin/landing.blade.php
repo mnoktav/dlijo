@@ -20,7 +20,6 @@
 	    <ul class="navbar-nav mr-auto">
 	      
 	    </ul>
-	    <button class="btn btn-warning my-2 my-sm-0 mr-3" type="submit">Logout</button>
 	  </div>
 	</nav>
 	<div class="container text-center" style="padding: 2% 5%;">

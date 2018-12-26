@@ -38,9 +38,15 @@
         </div>
     @endif
     <div class="row">
-		<div class="col">
+		<div class="col-2">
 			<button class="btn btn-success" type="button" data-toggle="collapse" data-target="#input-data-pembelian" aria-expanded="false" aria-controls="input-data-pembelian">
 		    Tambah Data</button>
+		</div>
+		<div class="col-7 mt-1">
+			<marquee scrollamount="9" style="padding: 0.5rem; background-color: #e5e5e5;">
+				<i>Pengeluaran Hari Ini ({{date('d F Y')}}) : Rp {{number_format($pengeluaranh,0,'.','.')}}</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<i>Pengeluaran Bulan Ini ({{date('F')}}) : Rp {{number_format($pengeluaranb,0,'.','.')}}</i>
+			</marquee>	
 		</div>
     </div>
     <div class="row">
@@ -48,7 +54,7 @@
     		<div class="collapse" id="input-data-pembelian">
 	    		<div class="card">
 	    			<div class="card-body">
-	    				<h4><b>Input Data Pembelian</b></h4>
+	    				<h4><b>Input Data Pengeluaran</b></h4>
 	    				<hr>
 	    				
 	    				<form action="{{ route('addpembelian.admin') }}" method="POST" enctype="multipart/form-data">
@@ -58,17 +64,12 @@
 									<div class="card">
 										<div class="card-body">
 											<div class="form-group">
-												<label>Supplier</label>
-												<select name="supplier" class="form-control" style="text-transform: capitalize;">
-													<option value="">- Pilih -</option>
-													@foreach ($supplier as $suppliers)
-															<option value="{{$suppliers->id_supplier}}" style="text-transform: capitalize;">{{$suppliers->nama_supplier}}</option>
-													@endforeach
-												</select>
-											</div>
-											<div class="form-group">
 												<label>Tanggal</label>
 												<input type="date" class="form-control" name="tanggal" required="">
+											</div>
+											<div class="form-group">
+												<label>Total Pengeluaran</label>
+												<input type="text" class="form-control" name="total" placeholder="Rp">
 											</div>
 											<div style="margin-top: 2%;">
 												<label for="">Bukti Pembayaran : </label><br>
@@ -81,36 +82,7 @@
 	    						<div class="col">
 	    							<div class="card">
 	    								<div class="card-body">
-		    								<div class="form-group">
-				    							<table class="table table-striped" id="dynamic_field"> 
-				    								<tr>
-				    									<th width="20%">Produk</th>
-				    									<th width="20%">Jumlah (kg/satuan)</th>
-				    									<th width="25%">Total</th>
-				    									<th>Keterangan</th>
-				    								</tr> 
-				                                    <tr>  
-				                                        <td>
-				                                        	<select name="produk" id="produk" class="form-control produk_list">
-				                                        		<option>- Pilih -</option>
-				                                        		@foreach ($produk as $produk)
-				                                        			<option value="{{$produk->id_produk}}">{{$produk->nama_produk}}</option>
-				                                        		@endforeach
-				                                        		
-				                                        	</select>
-				                                       	</td>
-				                                        <td>
-				                                        	<input type="number" name="jumlah" class="form-control jumlah_list" min="0" />
-				                                        </td>
-				                                        <th>
-				                                        	<input type="text" name="total_bayar" class="form-control total_list" placeholder="Rp" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
-				                                        </th>
-				                                        <th>
-				                                        	<input type="text" name="Keterangan" class="form-control ket_list" />
-				                                        </th>     
-				                                    </tr>  
-				                               	</table>
-				                            </div>
+		    								<textarea name="keterangan" id="" cols="30" rows="5" class="form-control" placeholder="Catatan....."></textarea>
 											<div class="text-right">
 												<br>
 												<input type="submit" value="simpan" name="submit" class="btn btn-primary">
@@ -129,43 +101,30 @@
 		<div class="col-md-12">
 			<div class="card">
 			  <div class="card-body">
-			  	<h3><b>Data Pembelian</b></h3>
+			  	<h3><b>Data Pengeluaran</b></h3>
 			  	<hr>
 				<div class="table-responsive">
 					<table class="table table-hover text-center" id="data-pembelian">
 						<thead class="thead-light">
 							<tr>
 								<th width="5%">No</th>
-								<th>Tanggal</th>
-								<th width="15%">Produk</th>
-								<th width="10%">Jumlah</th>
-								<th>Supplier</th>
-								<th width="20%">-</th>
+								<th width="15%">Tanggal</th>
+								<th width="15%">Total Pengeluaran</th>
+								<th>Keterangan</th>
+								<th width="20%">Bukti Pembayaran & Edit</th>
 							</tr>
 						</thead>
 						<tbody>
 							@php
-								$i=1;
+								$i = 1;
 							@endphp
-							@foreach ($pembelian as $beli)
-							@php
-								if($beli->satuan=='gram'){
-		    						$satuan = 'kg';
-		    					}else{
-		    						$satuan = $beli->satuan;
-		    					}
-							@endphp
+							@foreach($data_pengeluaran as $key)
 							<tr>
 								<td>{{$i++}}</td>
-								<td>{{date('d F Y', strtotime($beli->tanggal))}}</td>
-								<td style="text-transform: capitalize;">{{$beli->nama_produk}}</td>
-								<td>{{$beli->jumlah.' '.$satuan}}</td>
-								<td>{{$beli->nama_supplier}}</td>
-								<td>
-									<a href="{{ route('detailpembelian.admin',$beli->id_pembelian) }}" class="btn btn-info btn-sm" target="_blank">
-						                <i class="fas fa-info"></i>
-						            </a>
-								</td>
+								<td>{{date('d F Y', strtotime($key->tanggal))}}</td>
+								<td>Rp {{number_format($key->total,0,'.','.')}}</td>
+								<td>{{$key->keterangan}}</td>
+								<td><a href="{{ route('detailpembelian.admin',$key->id_pembelian)}}" target="_blank" class="btn btn-info btn-sm"><i class="fas fa-info fa-1x"></i></a></td>
 							</tr>
 							@endforeach
 						</tbody>

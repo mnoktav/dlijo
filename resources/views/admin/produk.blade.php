@@ -39,7 +39,8 @@
     @endif
     <div class="row">
 		<div class="col">
-			<button class="btn btn-info btn-success" type="button" data-toggle="collapse" data-target="#inputdata">Tambah Data</button>
+			<button class="btn btn-success" type="button" data-toggle="collapse" data-target="#inputdata">Tambah Data</button>
+			<a href="{{ route('cekstok.admin') }}" class="btn btn-rose">Update Stok</a>
 		</div>
 	</div> 
 	<div class="row">
