@@ -145,10 +145,19 @@
 							</thead>
 							<tbody>
 								@foreach ($details as $detail)
+									@php
+										$satuan = $detail->satuan;
+										if($satuan == 'gram'){
+											$satuan = 'kg';
+										}
+										else{
+											$satuan = $detail->satuan;
+										}
+									@endphp
 									<tr>
 										<td>{{$detail->nomor_nota}}</td>
 										<td style="text-transform: capitalize;">{{$detail->nama_produk}}</td>
-										<td>{{$detail->jumlah}}</td>
+										<td>{{$detail->jumlah.' '.$satuan}}</td>
 										<td>Rp {{number_format($detail->subtotal,0,'.','.')}}</td>
 										<td>Rp {{number_format($detail->potongan_harga,0,'.','.')}}</td>
 										<td>Rp

@@ -14,8 +14,9 @@ class KasirTransaksi extends Controller
     public function index()
     {
     	$penjualan = DB::table('transaksi_penjualan')
+            ->select(DB::raw('*,CAST(substring(nomor_nota,9,5) AS SIGNED) as urut'))
             ->where('status', 1)
-            ->orderBy('nomor_nota', 'desc')
+            ->orderBy('urut', 'desc')
             ->get();
     	$penjualan_batal = DB::table('transaksi_penjualan')
             ->where('status', 0)
@@ -36,12 +37,29 @@ class KasirTransaksi extends Controller
     		return redirect()->back()->with('kosong', 'Keranjang Kosong!');
     	}
         elseif(isset($request->simpan)){
-            $nota = DB::table('transaksi_penjualan')->max('nomor_nota');
+            $nota = DB::table('transaksi_penjualan')
+            ->select(DB::raw('*,CAST(nomor_nota AS SIGNED) as urut'))
+            ->orderBy('urut', 'desc')
+            ->first();
 
-            $no_urut = (int) substr($nota, 8, 4);
-            $no_urut++;
-            $no_nota = date('Ymd').sprintf("%04s", $no_urut);
-
+            if(isset($nota->nomor_nota)){
+                if(strlen($nota->nomor_nota)<13){
+                    $no_urut = (int) substr($nota->nomor_nota, 8, 4);
+                    $no_urut++;
+                    $no_nota = date('Ymd').sprintf("%04s", $no_urut);
+                }
+                else{
+                    $no_urut = (int) substr($nota->nomor_nota, 8, 5);
+                    $no_urut++;
+                    $no_nota = date('Ymd').sprintf("%04s", $no_urut);
+                }
+            }
+            else{
+                $no_nota = date('Ymd').'0001'; 
+            }
+            
+            
+            // die($no_nota);
             $insert = DB::table('transaksi_penjualan')->insert([
                 'nomor_nota' => $no_nota,
                 'total_bayar' => $request->tots_bayar,
@@ -82,11 +100,26 @@ class KasirTransaksi extends Controller
             }
         }
     	else{
-    		$nota = DB::table('transaksi_penjualan')->max('nomor_nota');
+    		$nota = DB::table('transaksi_penjualan')
+            ->select(DB::raw('*,CAST(nomor_nota AS SIGNED) as urut'))
+            ->orderBy('urut', 'desc')
+            ->first();
 
-	    	$no_urut = (int) substr($nota, 8, 4);
-	    	$no_urut++;
-	    	$no_nota = date('Ymd').sprintf("%04s", $no_urut);
+            if(isset($nota->nomor_nota)){
+                if(strlen($nota->nomor_nota)<13){
+                    $no_urut = (int) substr($nota->nomor_nota, 8, 4);
+                    $no_urut++;
+                    $no_nota = date('Ymd').sprintf("%04s", $no_urut);
+                }
+                else{
+                    $no_urut = (int) substr($nota->nomor_nota, 8, 5);
+                    $no_urut++;
+                    $no_nota = date('Ymd').sprintf("%04s", $no_urut);
+                }
+            }
+            else{
+                $no_nota = date('Ymd').'0001'; 
+            }
 
 	    	$insert = DB::table('transaksi_penjualan')->insert([
 			    'nomor_nota' => $no_nota,
