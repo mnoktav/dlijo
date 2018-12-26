@@ -221,8 +221,12 @@
   </script>
   <script>
     $(document).ready(function() {
-      $('#lunas').DataTable();
-      $('#batal').DataTable();
+      $('#lunas').DataTable({
+        "pageLength": 25
+      });
+      $('#batal').DataTable({
+        "pageLength": 25
+      });
       $('#kasir-produk').DataTable({
         "bPaginate": false,
         "bLengthChange": false,

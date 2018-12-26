@@ -63,7 +63,7 @@
           <li class="nav-item  {{ Request::segment(2) === 'pembelian-admin' ? 'active' : null }}">
             <a class="nav-link" href="{{route('pembelian.admin')}}">
               <i class="fas fa-sign-out-alt"></i>
-              <p>Data Pembelian</p>
+              <p>Data Pengeluaran</p>
             </a>
           </li>
           <li class="nav-item  {{ Request::segment(2) === 'penjualan-admin' ? 'active' : null }}">
@@ -239,10 +239,21 @@
   </script>
   <script>
     $(document).ready(function() {
-      $('#lunas').DataTable();
-      $('#batal').DataTable();
-      $('#data-pembelian').DataTable();
+      $('#lunas').DataTable({
+        "pageLength": 25
+      });
+      $('#batal').DataTable({
+        "pageLength": 25
+      });
+      $('#data-pembelian').DataTable({
+        "pageLength": 25
+      });
       $('#supplier').DataTable();
+      $('#update-stok').DataTable({
+        "paging":   false,
+        "ordering": false,
+        "info":     false
+      });
     } );
   </script>
   
