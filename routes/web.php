@@ -50,6 +50,8 @@ Route::post('/admin/supplier-admin/update', 'AdminSupplier@UpdateSupplier')->nam
 //laporan admin
 Route::get('/admin/laporan-admin', 'AdminLaporan@index')->name('laporan.admin');
 Route::post('/admin/laporan-admin/download', 'AdminLaporan@Download')->name('downloadlaporan.admin');
+Route::get('/admin/laporan-admin-harian', 'AdminLaporanHarian@index')->name('laporanharian.admin');
+Route::post('/admin/laporan-admin-harian/download', 'AdminLaporanHarian@Download')->name('downloadlaporanharian.admin');
 
 Route::get('/admin/penjualan-admin', 'AdminPenjualan@index')->name('penjualan.admin');
 

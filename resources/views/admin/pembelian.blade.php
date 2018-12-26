@@ -163,7 +163,7 @@
 								<td>{{$beli->nama_supplier}}</td>
 								<td>
 									<a href="{{ route('detailpembelian.admin',$beli->id_pembelian) }}" class="btn btn-info btn-sm" target="_blank">
-						                <i class="material-icons">info</i>
+						                <i class="fas fa-info"></i>
 						            </a>
 								</td>
 							</tr>

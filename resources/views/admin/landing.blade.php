@@ -6,9 +6,8 @@
 	<link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}">
   	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  	<link href="{{ asset('font-awesome/css/all.css') }} " rel="stylesheet">
 	<link href="{{ asset('material/assets/css/material-dashboard.css?v=2.1.0') }} " rel="stylesheet" />
-	<link href="https://fonts.googleapis.com/css?family=Material+Icons|Amatic+SC" rel="stylesheet">
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -30,19 +29,19 @@
 				<img src="{{ asset('img/logo.png') }}" alt="" height="90%" width="80%">
 			</div>
 			<div class="col">
-				<p style="font-size: 70px; text-align: right;line-height: normal; text-transform: capitalize; font-family: 'Amatic SC', cursive;"><b>"Harga pas dikantong, kualitas supermarket dong!"</b></p>
+				<i><p style="font-size: 60px; text-align: right;line-height: normal; text-transform: capitalize;"><b>"Harga pas dikantong, kualitas supermarket dong!"</b></p></i>
 			</div>
 		</div>
 		<div class="row" style="margin-top: 2%;">
-			<div class="col-3">
-				<div id="menus">
-					<i class="material-icons" style="font-size: 110px; margin-top: 10px;">store</i><br>
+			<div class="col-3" >
+				<div id="menus" style="padding: 10px 0;">
+					<i class="fas fa-store fa-5x"></i><br>
 					<a href="{{ route('dashboard.kasir') }}" class="btn btn-warning" target="_blank">kasir</a>
 				</div>
 			</div>
 			<div class="col-3">
-				<div id="menus">
-					<i class="material-icons" style="font-size: 110px; margin-top: 10px;">domain</i><br>
+				<div id="menus" style="padding: 10px 0;">
+					<i class="fas fa-building fa-5x"></i><br>
 					<a href="{{ route('dashboard.admin') }}" class="btn btn-info" target="_blank">admin</a>
 				</div>
 			</div>

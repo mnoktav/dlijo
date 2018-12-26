@@ -80,13 +80,23 @@ class AdminDashboard extends Controller
         $chart3->dataset('Penjualan','line',array_reverse($penjualan_bulans));
 
         //Chart 2
-        $view_produk = DB::table('produk')
-            ->where('status', 1)
-            ->get();
+        $max_dates=2;
+        for($i=0;$i<=$max_dates;$i++){
+            $dates = mktime(0,0,0,date('m'),date('d')-$i,date('Y'));
+            $zu[$i] = date('d F', $dates);
+        }
+        $view_produk = DB::table('view_penjualan')
+                ->select('nama_produk', DB::raw('SUM(jumlah) as jumlah'),'id_produk')
+                ->where([
+                    ['status', 1],
+                    ['jumlah','>',0],
+                ])
+                ->groupBy('id_produk')
+                ->get();
         $chart2 = new Sample;
-        $chart2->labels(array_reverse($zz));
+        $chart2->labels(array_reverse($zu));
         for($i=0; $i<count($view_produk->pluck('id_produk')); $i++){
-            for($u=0; $u<=6; $u++){
+            for($u=0; $u<=2; $u++){
             $produk_terjual[$u] = DB::table('view_penjualan')
                 ->whereDate('created_at',today()->subDays($u))
                 ->where('id_produk',$view_produk->pluck('id_produk')[$i])

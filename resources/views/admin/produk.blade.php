@@ -191,9 +191,9 @@
 				    		
 				    		<tr>
 				    			<td>
-				    				<button class="btn btn-warning btn-sm" data-target="#edit_produk" data-toggle="modal" data-produk="{{$produks->id_produk}}" data-harga="{{$produks->harga_jual}}" data-namaproduk="{{$produks->nama_produk}}" data-cat="{{$produks->id_kat}}" data-sat="{{$produks->satuan}}"><i class="material-icons">create</i></button>
-									<button class="btn btn-danger btn-sm" data-target="#delete_produk" data-toggle="modal" data-produk="{{$produks->id_produk}}">
-										<i class="material-icons">cancel</i></button>
+				    				<button class="btn btn-warning btn-sm" data-target="#edit_produk" data-toggle="modal" title="edit" data-produk="{{$produks->id_produk}}" data-harga="{{$produks->harga_jual}}" data-namaproduk="{{$produks->nama_produk}}" data-cat="{{$produks->id_kat}}" data-sat="{{$produks->satuan}}"><i class="fas fa-edit"></i></button>
+									<button class="btn btn-danger btn-sm" data-target="#delete_produk" data-toggle="modal" title="hapus" data-produk="{{$produks->id_produk}}">
+										<i class="fas fa-trash"></i></button>
 								</td>
 				    		</tr>
 				    	</table>
@@ -216,7 +216,7 @@
 			  			<tr>
 			  				<td>{{$kats->nama_kategori}}</td>
 			  				<td>
-			  					<a href="{{ route('deletekategori.admin',$kats->id_kat) }}"><i class="material-icons text-danger">cancel</i></a>
+			  					<a href="{{ route('deletekategori.admin',$kats->id_kat) }}" title="hapus"><i class="fas fa-trash text-danger"></i></a>
 			  				</td>
 			  			</tr>
 			  			@endforeach

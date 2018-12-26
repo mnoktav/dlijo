@@ -108,8 +108,8 @@
 								<td>{{$data_supplier->alamat}}</td>
 								<td>{{$data_supplier->catatan}}</td>
 								<td>
-									<button data-target="#edit_supplier" data-toggle="modal" data-idsupp="{{$data_supplier->id_supplier}}" data-namasupp="{{$data_supplier->nama_supplier}}" data-telpsupp="{{$data_supplier->nomor_telephone}}" data-alamat="{{$data_supplier->alamat}}" data-catatan="{{$data_supplier->catatan}}" class="btn btn-warning btn-sm"><i class="material-icons">create</i></button>
-									<button data-target="#delete_supplier" data-toggle="modal" data-idsupp="{{$data_supplier->id_supplier}}" class="btn btn-danger btn-sm"><i class="material-icons">cancel</i></button>
+									<button data-target="#edit_supplier" data-toggle="modal" title="edit" data-idsupp="{{$data_supplier->id_supplier}}" data-namasupp="{{$data_supplier->nama_supplier}}" data-telpsupp="{{$data_supplier->nomor_telephone}}" data-alamat="{{$data_supplier->alamat}}" data-catatan="{{$data_supplier->catatan}}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+									<button data-target="#delete_supplier" data-toggle="modal" title="hapus" data-idsupp="{{$data_supplier->id_supplier}}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
 								</td>
 							</tr>
 							@endforeach

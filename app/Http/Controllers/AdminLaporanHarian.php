@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\ExcelExport;
+use App\Exports\ExcelExportH;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -10,33 +10,24 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Charts\Sample;
 
 
-class AdminLaporan extends Controller
+class AdminLaporanHarian extends Controller
 {
     public function index(Request $request)
     {
     	$data = 'Laporan';
-    	$months = array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
-    	//value bulan
-    	for($i=1;$i<=12;$i++){
-    		$value[$i] = $i;
-    	}
 
-    	if(!isset($request->bulan) && !isset($request->tahun)){
-    		$bulan_b = date('m');
-    		$tahun_t = date('Y');
+    	if(!isset($request->tanggal)){
+    		$tanggal = date('Y-m-d');
     	}else{
-    		$bulan_b = $request->bulan;
-    		$tahun_t = $request->tahun;
+    		$tanggal = $request->tanggal;
     	}
 
     	$jumlah = DB::table('transaksi_penjualan')
-    		->whereMonth('created_at', $bulan_b)
-    		->whereYear('created_at',$tahun_t)
+    		->whereDate('created_at', $tanggal)
     		->count('nomor_nota');
 
     	$details = DB::table('view_penjualan')
-    		->whereMonth('created_at', $bulan_b)
-    		->whereYear('created_at',$tahun_t)
+    		->whereDate('created_at', $tanggal)
     		->orderBy('nomor_nota','ASC')
     		->get();
 
@@ -44,6 +35,7 @@ class AdminLaporan extends Controller
     	if ($jumlah>=1) {
     		$view_produk = DB::table('view_penjualan')
     			->select('nama_produk', DB::raw('SUM(jumlah) as jumlah'),'id_produk')
+    			->whereDate('created_at', $tanggal)
 	            ->where([
 	            	['status', 1],
 	            	['jumlah','>',0],
@@ -51,12 +43,11 @@ class AdminLaporan extends Controller
 	            ->groupBy('id_produk')
 	            ->get();
 	        $chart2 = new Sample;
-	        $chart2->labels([$months[$bulan_b-1].' '.$tahun_t]);
+	        $chart2->labels([date('d F Y', strtotime($tanggal))]);
 	        for($i=0; $i<count($view_produk->pluck('id_produk')); $i++){
 	        	for ($o=0; $o<1 ; $o++) { 
 	        		$produk_terjual[$o] = DB::table('view_penjualan')
-	                ->whereMonth('created_at', $bulan_b)
-	                ->whereYear('created_at', $tahun_t)
+	                ->whereDate('created_at', $tanggal)
 	                ->where('id_produk',$view_produk->pluck('id_produk')[$i])
 	                ->sum('jumlah');
 	        	}
@@ -68,30 +59,25 @@ class AdminLaporan extends Controller
     	}
 
     	$jumlah_transaksi = DB::table('transaksi_penjualan')
-	                ->whereMonth('created_at', $bulan_b)
-	                ->whereYear('created_at', $tahun_t)
+	                ->whereDate('created_at', $tanggal)
 	                ->where('status',1)
 	                ->count('nomor_nota');
 	    $total_transaksi = DB::table('transaksi_penjualan')
-	                ->whereMonth('created_at', $bulan_b)
-	                ->whereYear('created_at', $tahun_t)
+	                ->whereDate('created_at', $tanggal)
 	                ->where('status',1)
 	                ->sum('total_bayar');
     	$rata_transaksi = DB::table('transaksi_penjualan')
-	                ->whereMonth('created_at', $bulan_b)
-	                ->whereYear('created_at', $tahun_t)
+	                ->whereDate('created_at', $tanggal)
 	                ->where('status',1)
 	                ->avg('total_bayar');
         
         //dd($chart2);
-    	return view('admin/laporan',[
+    	return view('admin/laporan-harian',[
     		'details' => $details,
     		'jumlah' => $jumlah,
-    		'months' => $months,
-    		'value' => $value,
-    		'get_b' => $bulan_b,
-    		'get_t' => $tahun_t,
-    		'chart_laporan' => $chart2,
+    		'tanggal' => $tanggal,
+    		'get_tanggal' => $tanggal,
+    		'chart_laporan_harian' => $chart2,
     		'jumlah_transaksi' => $jumlah_transaksi,
     		'total_transaksi' => $total_transaksi,
     		'rata_transaksi' => $rata_transaksi,
@@ -107,40 +93,35 @@ class AdminLaporan extends Controller
     }
     public function Download(Request $request)
     {
-
+    	$tanggal = $request->tanggal;
     	$details = DB::table('view_penjualan')
-    		->whereMonth('created_at', $request->bulan)
-    		->whereYear('created_at',$request->tahun)
+    		->whereDate('created_at', $tanggal)
     		->orderBy('nomor_nota','ASC')
     		->get();
-    	$months = array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
+    	
 
     	$jumlah_transaksi = DB::table('transaksi_penjualan')
-	                ->whereMonth('created_at', $request->bulan)
-	                ->whereYear('created_at', $request->tahun)
+	                ->whereDate('created_at', $tanggal)
 	                ->where('status',1)
 	                ->count('nomor_nota');
 	    $total_transaksi = DB::table('transaksi_penjualan')
-	                ->whereMonth('created_at', $request->bulan)
-	                ->whereYear('created_at', $request->tahun)
+	                ->whereDate('created_at', $tanggal)
 	                ->where('status',1)
 	                ->sum('total_bayar');
     	$rata_transaksi = DB::table('transaksi_penjualan')
-	                ->whereMonth('created_at', $request->bulan)
-	                ->whereYear('created_at', $request->tahun)
+	                ->whereDate('created_at', $tanggal)
 	                ->where('status',1)
 	                ->avg('total_bayar');
 
 	    $view_produk = DB::table('view_penjualan')
 	    		->select('id_produk','nama_produk',DB::raw('SUM(jumlah) as jumlah, SUM(subtotal2) as total'))
-	    		->whereMonth('created_at', $request->bulan)
-	            ->whereYear('created_at', $request->tahun)
+	    		->whereDate('created_at', $tanggal)
 	            ->where('status', 1)
 				->groupBy('id_produk')
 	            ->get();
     	if($request->download == 'pdf'){
     		$output = '
-		    <h3 align="center">Laporan Penjualan Bulan '.$months[$request->bulan-1].' '.$request->tahun.' </h3><br>
+		    <h3 align="center">Laporan Penjualan Tanggal '.date('d F Y', strtotime($tanggal)).' </h3><br>
 		    <table width="100%" style="border-collapse: collapse; border: 0px;">
 		    	<tr>
 				    <th align="center" style="border: 1px solid; padding:10px; background-color:#c6dcff;">Nomor Nota</th>
@@ -166,9 +147,9 @@ class AdminLaporan extends Controller
 		      	</tr>
 		    	';
 		    }
-		     $output .= '</table> <br><br>';
+		    $output .= '</table> <br><br>';
 		    
-		    $output .= '<h3 align="center">Data Produk Terjual Bulan '.$months[$request->bulan-1].' '.$request->tahun.' </h3><br>
+		    $output .= '<h3 align="center">Data Produk Terjual Tanggal '.date('d F Y', strtotime($tanggal)).' </h3><br>
 		    <table width="100%" style="border-collapse: collapse; border: 0px;">
 		    	<tr>
 				    <th align="center" style="border: 1px solid; padding:10px; background-color:#c6dcff;">Produk</th>
@@ -180,8 +161,8 @@ class AdminLaporan extends Controller
 		    {
 		    $output .= '
 		      	<tr>
-			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px; text-transform:capitalize;">'.$produk->nama_produk.'</td>
-			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">'.$produk->jumlah.'</td>
+			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">'.$produk->nama_produk.'</td>
+			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px; text-transform:capitalize;">'.$produk->jumlah.'</td>
 			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">Rp '.number_format($produk->total,0,'.','.').'</td>
 		      	</tr>
 		    	';
@@ -216,13 +197,12 @@ class AdminLaporan extends Controller
 				<br>
 		    ';
 
-		    
 	    	$pdf = \App::make('dompdf.wrapper');
 		    $pdf->loadHTML($output);
-		    return $pdf->download('LP'.$request->bulan.$request->tahun.'.pdf');
+		    return $pdf->download('LP'.date('d F Y', strtotime($tanggal)).'.pdf');
     	}
     	elseif($request->download == 'excel'){
-			return (new ExcelExport)->Bulan($request->bulan)->Tahun($request->tahun)->download('LP'.$request->bulan.$request->tahun.'.xlsx');
+			return (new ExcelExportH)->Tanggal($request->tanggal)->download('LP'.date('dFY', strtotime($tanggal)).'.xlsx');
 		}
     	
     }

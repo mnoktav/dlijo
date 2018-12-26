@@ -5,7 +5,7 @@
 @endsection
 
 @section('navbar')
-	<a class="navbar-brand" href="">Transaksi <i class="material-icons">keyboard_arrow_right</i>{{$data}}</a>
+	<a class="navbar-brand" href="">Transaksi <i class="fas fa-chevron-right"></i> {{$data}}</a>
 @endsection
 
 @section('content')
