@@ -35,9 +35,10 @@ class AdminLaporan extends Controller
     		->count('nomor_nota');
 
     	$details = DB::table('view_penjualan')
+    		->select(DB::raw('*,CAST(nomor_nota AS SIGNED) as urut'))
     		->whereMonth('created_at', $bulan_b)
     		->whereYear('created_at',$tahun_t)
-    		->orderBy('nomor_nota','ASC')
+    		->orderBy('urut','DESC')
     		->get();
 
     	//chart
@@ -109,9 +110,10 @@ class AdminLaporan extends Controller
     {
 
     	$details = DB::table('view_penjualan')
+    		->select(DB::raw('*,CAST(nomor_nota AS SIGNED) as urut'))
     		->whereMonth('created_at', $request->bulan)
     		->whereYear('created_at',$request->tahun)
-    		->orderBy('nomor_nota','ASC')
+    		->orderBy('urut','DESC')
     		->get();
     	$months = array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
 
@@ -132,7 +134,7 @@ class AdminLaporan extends Controller
 	                ->avg('total_bayar');
 
 	    $view_produk = DB::table('view_penjualan')
-	    		->select('id_produk','nama_produk',DB::raw('SUM(jumlah) as jumlah, SUM(subtotal2) as total'))
+	    		->select('id_produk','nama_produk','satuan',DB::raw('SUM(jumlah) as jumlah, SUM(subtotal2) as total'))
 	    		->whereMonth('created_at', $request->bulan)
 	            ->whereYear('created_at', $request->tahun)
 	            ->where('status', 1)
@@ -154,11 +156,18 @@ class AdminLaporan extends Controller
 			';  
 		    foreach($details as $detail)
 		    {
+		    	$satuan = $detail->satuan;
+				if($satuan == 'gram'){
+					$satuan = 'kg';
+				}
+				else{
+					$satuan = $detail->satuan;
+				}
 		    $output .= '
 		      	<tr>
 			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">'.$detail->nomor_nota.'</td>
 			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px; text-transform:capitalize;">'.$detail->nama_produk.'</td>
-			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">'.$detail->jumlah.'</td>
+			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px; text-transform:capitalize;">'.$detail->jumlah.' '.$satuan.'</td>
 			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">Rp '.number_format($detail->subtotal,0,'.','.').'</td>
 			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">Rp '.number_format($detail->potongan_harga,0,'.','.').'</td>
 			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">Rp '.number_format($detail->subtotal2,0,'.','.').'</td>
@@ -178,10 +187,17 @@ class AdminLaporan extends Controller
 			';
 			foreach($view_produk as $produk)
 		    {
+		    	$satuan = $produk->satuan;
+				if($satuan == 'gram'){
+					$satuan = 'kg';
+				}
+				else{
+					$satuan = $produk->satuan;
+				}
 		    $output .= '
 		      	<tr>
 			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px; text-transform:capitalize;">'.$produk->nama_produk.'</td>
-			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">'.$produk->jumlah.'</td>
+			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px; text-transform:capitalize;">'.$produk->jumlah.' '.$satuan.'</td>
 			       <td align="center" style="border: 1px solid; padding:5px;font-size:14px;">Rp '.number_format($produk->total,0,'.','.').'</td>
 		      	</tr>
 		    	';

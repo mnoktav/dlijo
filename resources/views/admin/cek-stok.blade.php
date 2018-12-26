@@ -48,7 +48,7 @@
 										<input type="hidden" value="{{$cek->id_produk}}" name="id_produk[]">
 										<td style="text-transform: capitalize;">{{$cek->nama_produk}}</td>
 										<td><input class="form-control" name="stok[]" type="number" value="{{$cek->stok}}" readonly=""></td>
-										<td><input class="form-control" name="update_stok[]" type="text" value="{{$cek->stok}}"></td>
+										<td><input class="form-control" name="update_stok[]" type="text" value="{{$cek->stok}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"></td>
 										<td align="center" style="text-transform: capitalize;">
 											@if($cek->satuan == 'gram')
 											{{'kg'}}

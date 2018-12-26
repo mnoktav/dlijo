@@ -69,7 +69,7 @@
 											</div>
 											<div class="form-group">
 												<label>Total Pengeluaran</label>
-												<input type="text" class="form-control" name="total" placeholder="Rp">
+												<input type="text" class="form-control" name="total" placeholder="Rp" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 											</div>
 											<div style="margin-top: 2%;">
 												<label for="">Bukti Pembayaran : </label><br>
