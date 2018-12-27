@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class AdminPembelian extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('usersession');
+
+    }
     public function index()
     {
     	$data_pengeluaran = DB::table('transaksi_pembelian')

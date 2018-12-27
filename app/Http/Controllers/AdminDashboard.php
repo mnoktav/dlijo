@@ -7,7 +7,13 @@ use Illuminate\Http\Request;
 use App\Charts\Sample;
 
 class AdminDashboard extends Controller
-{
+{   
+    
+    public function __construct()
+    {
+        $this->middleware('usersession');
+
+    }
     public function index()
     {
     	$data = 'Dashboard';

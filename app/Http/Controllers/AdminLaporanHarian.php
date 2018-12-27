@@ -12,6 +12,11 @@ use App\Charts\Sample;
 
 class AdminLaporanHarian extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('usersession');
+
+    }
     public function index(Request $request)
     {
     	$data = 'Laporan';

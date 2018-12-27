@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class AdminProduk extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('usersession');
+
+    }
     public function index(Request $request)
     {
 
