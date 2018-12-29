@@ -151,13 +151,13 @@
 				    <div class="col-sm-4" style="padding: 1%;">
 				    	<table class="table table-bordered" id="product-table">
 				    		<tr>
-				    			<td rowspan="5" width="100"><img src="
+				    			<td rowspan="4" width="100"><img src="
 				    		@if ($produks->gambar != '')
 				    			../img/{{$produks->gambar}}
 				    		@else
 				    			../img/no.jpg
 				    		@endif" style="width: 100px; height: 100px;"></td>
-				    			<td style="text-transform: capitalize;"><b>{{$produks->nama_produk}}</b></td>
+				    			<td style="text-transform: capitalize; font-weight: bolder;"><b>{{$produks->nama_produk}}</b></td>
 				    		</tr>
 				    		<tr>
 				    			<td style="text-transform: capitalize;">Kategori : 
@@ -191,10 +191,12 @@
 				    		</tr>
 				    		
 				    		<tr>
-				    			<td>
-				    				<button class="btn btn-warning btn-sm" data-target="#edit_produk" data-toggle="modal" title="edit" data-produk="{{$produks->id_produk}}" data-harga="{{$produks->harga_jual}}" data-namaproduk="{{$produks->nama_produk}}" data-cat="{{$produks->id_kat}}" data-sat="{{$produks->satuan}}"><i class="fas fa-edit"></i></button>
-									<button class="btn btn-danger btn-sm" data-target="#delete_produk" data-toggle="modal" title="hapus" data-produk="{{$produks->id_produk}}">
-										<i class="fas fa-trash"></i></button>
+				    			<td colspan="2">
+				    				<div class="text-center">
+				    					<button class="btn btn-warning btn-sm" data-target="#edit_produk" data-toggle="modal" title="edit" data-produk="{{$produks->id_produk}}" data-harga="{{$produks->harga_jual}}" data-namaproduk="{{$produks->nama_produk}}" data-cat="{{$produks->id_kat}}" data-sat="{{$produks->satuan}}"><i class="fas fa-edit"></i></button>
+										<button class="btn btn-danger btn-sm" data-target="#delete_produk" data-toggle="modal" title="hapus" data-produk="{{$produks->id_produk}}">
+											<i class="fas fa-trash"></i></button>
+				    				</div>
 								</td>
 				    		</tr>
 				    	</table>

@@ -18,9 +18,9 @@ class AdminPembelian extends Controller
     					->where('status',1)
     					->orderBy('tanggal', 'DESC')
     					->get();
-    	$pengeluaranh = DB::table('transaksi_pembelian')
+    	$pengeluarany = DB::table('transaksi_pembelian')
     					->where('status',1)
-    					->whereDate('tanggal', date('Y-m-d'))
+    					->whereYear('tanggal', date('Y'))
     					->sum('total');
     	$pengeluaranb = DB::table('transaksi_pembelian')
     					->where('status',1)
@@ -31,7 +31,7 @@ class AdminPembelian extends Controller
     	return view('admin/pembelian',[
     		'data' => $data,
     		'data_pengeluaran' => $data_pengeluaran,
-    		'pengeluaranh' => $pengeluaranh,
+    		'pengeluarany' => $pengeluarany,
     		'pengeluaranb' => $pengeluaranb
     	]);
     }

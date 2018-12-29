@@ -163,8 +163,7 @@ class AdminProduk extends Controller
                     ->update([
                     'stok' => $request->update_stok[$i],
                     'update_stok' => $request->update_stok[$i],
-                    'update_stok_at' => NOW(),
-                    'updated_at' => NOW()
+                    'update_stok_at' => NOW()
                     ]); 
                 }
             }
