@@ -81,7 +81,7 @@
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="">
-                  username
+                  KASIR-JOMBANG
                   <i class="fas fa-user-circle"></i>
                 </a>
               </li>

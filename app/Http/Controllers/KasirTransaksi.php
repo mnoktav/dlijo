@@ -36,6 +36,9 @@ class KasirTransaksi extends Controller
     	if($request->tots_bayar==0){
     		return redirect()->back()->with('kosong', 'Keranjang Kosong!');
     	}
+        elseif($request->pembayaran<$request->tots_bayar){
+            return redirect()->back()->with('kosong', 'Pembayaran Tidak Mencukupi!');
+        }
         elseif(isset($request->simpan)){
             $nota = DB::table('transaksi_penjualan')
             ->select(DB::raw('*,CAST(nomor_nota AS SIGNED) as urut'))
