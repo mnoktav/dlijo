@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class AdminPenjualan extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('usersession');
+
+    }
     public function index()
     {	
     	$penjualan = DB::table('transaksi_penjualan')

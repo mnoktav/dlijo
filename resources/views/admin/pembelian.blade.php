@@ -44,8 +44,8 @@
 		</div>
 		<div class="col-7 mt-1">
 			<marquee scrollamount="9" style="padding: 0.5rem; background-color: #e5e5e5;">
-				<i>Pengeluaran Hari Ini ({{date('d F Y')}}) : Rp {{number_format($pengeluaranh,0,'.','.')}}</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<i>Pengeluaran Bulan Ini ({{date('F')}}) : Rp {{number_format($pengeluaranb,0,'.','.')}}</i>
+				<i>Pengeluaran Bulan Ini ({{date('F')}}) : Rp {{number_format($pengeluaranb,0,'.','.')}}</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<i>Pengeluaran Tahun Ini ({{date('Y')}}) : Rp {{number_format($pengeluarany,0,'.','.')}}</i>
 			</marquee>	
 		</div>
     </div>

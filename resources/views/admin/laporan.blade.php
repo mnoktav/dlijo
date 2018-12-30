@@ -98,6 +98,26 @@
 										</tr>
 									</tbody>
 								</table>
+								<hr>
+								<div class="card" style="border: 1px solid orange">
+									<form action="{{ route('downloadlaporan.admin') }}" method="post">
+									{{csrf_field()}}
+									<div class="card-body">
+										<h4>Download Laporan : </h4>
+										<div class="">
+											<select name="download" class="form-control">
+												<option value="pdf">PDF</option>
+												<option value="excel">Excel</option>
+											</select>
+											<input type="hidden" name="bulan" value="{{$get_b}}">
+											<input type="hidden" name="tahun" value="{{$get_t}}">
+										</div>
+										<div class="text-right">
+											<input type="submit" name="submit" value="download" class="btn btn-default btn-sm">
+										</div>
+									</div>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -107,32 +127,15 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col">
-			@if ($jumlah > 0)			
+		@if ($jumlah > 0)
+		<div class="col-9">
 			<div class="card">
-				<div class="row">
-					<div class="col-md-1 offset-md-8 mt-md-3">
-						<p align="right"><b>Download :</b></p>
-					</div>
-					<div class="col-md-2  mt-md-2 mb-md-2" style="padding: 0 5%">
-						<form action="{{ route('downloadlaporan.admin') }}" method="post">
-							{{csrf_field()}}
-							<select name="download" class="form-control">
-								<option value="pdf">PDF</option>
-								<option value="excel">Excel</option>
-							</select>
-							<input type="hidden" name="bulan" value="{{$get_b}}">
-							<input type="hidden" name="tahun" value="{{$get_t}}">
-							<input type="submit" name="submit" value="download" class="btn btn-default btn-sm">
-						</form>
-					</div>
-				</div>
-				<div class="card-body" style="padding: 3%;">
+				<div class="card-body" style="padding: 2%;">
 					<h4 align="center" style="text-transform: uppercase; font-weight: bold;">Laporan Penjualan Bulan {{$months[$get_b-1].' '.$get_t}}</h4>
 					<br>
 					<div class="table-responsive">
 						<table class="table table-bordered text-center" id="chart">
-							<thead>
+							<thead class="thead-light">
 								<tr>
 									<th>Nomor Nota</th>
 									<th>Produk</th>
@@ -171,6 +174,41 @@
 					</div>
 				</div>
 			</div>
+		</div>			
+		<div class="col-3">
+			<div class="card" style="padding: 2%">
+				<div class="card-body">
+					<h4 align="center" style="text-transform: uppercase; font-weight: bold;">Produk Terjual</h4><br>
+					<table class="table table-bordered">
+						<thead class="thead-light">
+							<tr>
+								<th>Produk</th>
+								<th>Jumlah</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							@foreach($terjual as $terjual)
+							<tr>
+								<td style="text-transform: capitalize;">{{$terjual->nama_produk}}</td>
+								@php
+									$satuan = $terjual->satuan;
+									if($satuan == 'gram'){
+										$satuan = 'kg';
+									}
+									else{
+										$satuan = $terjual->satuan;
+									}
+								@endphp
+								<td style="text-transform: capitalize;">{{$terjual->jumlah.' '.$satuan}}</td>
+							</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+			
 			@elseif(isset($get_b) && isset($get_t))
 				<div class="card">
 					<div class="card-body" style="padding: 3%;">
@@ -179,8 +217,7 @@
 				</div>
 			@else
 				<p style="color: red;">*isi form cetak laporan terlebih dahulu</p>
-			@endif
-		</div>
+		@endif
 	</div>
 	<style>
 		#chart th{

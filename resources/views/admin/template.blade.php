@@ -100,11 +100,14 @@
           </button>
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="">
-                  username
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{session('login.username')}}
                   <i class="fas fa-user-circle"></i>
                 </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+                  <a class="dropdown-item" href="{{ route('logout.admin') }}" onclick="return confirm('Yakin ingin keluar?')">Log Out</a>
+                </div>
               </li>
               <!-- your navbar here -->
             </ul>

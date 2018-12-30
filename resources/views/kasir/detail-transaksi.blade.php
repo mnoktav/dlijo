@@ -49,17 +49,17 @@
 			    		<thead>
 			    			<tr>
 			    				<th>Produk</th>
-								<th>Harga</th>
 								<th>Jumlah</th>
+								<th>Subtotal</th>
 								<th>Potongan Harga</th>
-								<th>Subtotal</th>	
+								<th>Total Bayar</th>	
 			    			</tr>
 			    		</thead>
 			    		<tbody>
 			    			@foreach ($details as $detail)
 			    			<tr>
 			    				<td style="text-transform: capitalize;">{{$detail->nama_produk}}</td>
-			    				<td>Rp {{number_format($detail->harga_jual,0,'.','.')}}</td>
+			    				
 			    				@php
 			    					if($detail->satuan=='gram'){
 			    						$satuan = 'kg';
@@ -68,6 +68,7 @@
 			    					}
 			    				@endphp
 			    				<td>{{$detail->jumlah.' '.$satuan}}</td>
+			    				<td>Rp {{number_format($detail->subtotal,0,'.','.')}}</td>
 			    				<td>Rp {{number_format($detail->potongan_harga,0,'.','.')}}</td>
 			    				<td>Rp {{number_format($detail->subtotal2,0,'.','.')}}</td>
 			    			</tr>

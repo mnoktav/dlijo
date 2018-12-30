@@ -41,7 +41,7 @@
 			  			}
 			  		</style>
 			  		<table class="table text-center" id="kasir-produk">
-			  			<thead>
+			  			<thead class="thead-light">
 			  				<tr>
 			  					<th colspan="2">Jenis Produk</th>
 			  					<th>Kategori</th>

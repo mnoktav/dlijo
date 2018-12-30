@@ -12,6 +12,11 @@ use App\Charts\Sample;
 
 class AdminLaporanHarian extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('usersession');
+
+    }
     public function index(Request $request)
     {
     	$data = 'Laporan';
@@ -39,7 +44,7 @@ class AdminLaporanHarian extends Controller
     			->whereDate('created_at', $tanggal)
 	            ->where([
 	            	['status', 1],
-	            	['jumlah','>=',0],
+	            	['jumlah','>',0],
 	            ])
 	            ->groupBy('id_produk')
 	            ->get();
@@ -71,6 +76,14 @@ class AdminLaporanHarian extends Controller
 	                ->whereDate('created_at', $tanggal)
 	                ->where('status',1)
 	                ->avg('total_bayar');
+	    $terjual = DB::table('view_penjualan')
+	    		->select('id_produk','nama_produk','satuan',DB::raw('SUM(jumlah) as jumlah, SUM(subtotal2) as total'))
+	    		->whereDate('created_at', $tanggal)
+	            ->where('status', 1)
+				->groupBy('id_produk')
+				->orderBy('jumlah','DESC')
+	            ->get();
+        
         
         //dd($chart2);
     	return view('admin/laporan-harian',[
@@ -82,7 +95,8 @@ class AdminLaporanHarian extends Controller
     		'jumlah_transaksi' => $jumlah_transaksi,
     		'total_transaksi' => $total_transaksi,
     		'rata_transaksi' => $rata_transaksi,
-    		'data'=>$data
+    		'data'=>$data,
+    		'terjual' => $terjual
     	]);
 
     	if($request->download == 'pdf'){
@@ -120,6 +134,7 @@ class AdminLaporanHarian extends Controller
 	    		->whereDate('created_at', $tanggal)
 	            ->where('status', 1)
 				->groupBy('id_produk')
+				->orderBy('jumlah','DESC')
 	            ->get();
     	if($request->download == 'pdf'){
     		$output = '

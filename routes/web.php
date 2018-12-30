@@ -12,8 +12,12 @@
 */
 
 
-Route::get('/', 'Landing@index');
+Route::get('/', 'Landing@index')->name('landing');
 Route::get('/kasir', 'KasirDashboard@index');
+Route::get('/admin/login', 'Login@index')->name('login.admin');
+Route::get('/admin/logout', 'Login@DoLogout')->name('logout.admin');
+Route::post('/admin/do-login', 'Login@DoLogin')->name('dologin.admin');
+
 
 // cart
 Route::get('/kasir/dashboard-kasir', 'KasirDashboard@index')->name('dashboard.kasir');
