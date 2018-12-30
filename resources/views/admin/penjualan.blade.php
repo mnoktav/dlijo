@@ -40,7 +40,7 @@
 			    	</div>
 			    	<div class="table-responsive">
 			      		<table class="table" id="lunas">
-						    <thead class="text-center">
+						    <thead class="thead-light text-center">
 						        <tr>
 						            <th>No.</th>
 						            <th>No. Nota</th>
@@ -83,7 +83,7 @@
 			    	</div>
 			    	<div class="table-responsive">
 				      	<table class="table" id="batal">
-						    <thead class="text-center">
+						    <thead class="thead-light text-center">
 						        <tr>
 						            <th>No.</th>
 						            <th>No. Nota</th>

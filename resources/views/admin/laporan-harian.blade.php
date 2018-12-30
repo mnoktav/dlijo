@@ -44,14 +44,14 @@
 						</form>
 					</div>
 				</div>
-				@if ($jumlah >= 1 && isset($get_tanggal))
+				@if ($jumlah >= 0 && isset($get_tanggal))
 				<div class="card card-nav-tabs">
 					<div class="card-body">
 						<div class="row">
 							<div class="col-md-8">
 								
 									<p align="center">Total Penjualan Tanggal {{date('d F Y',strtotime($tanggal))}}</p>
-									@if ($jumlah >= 1)
+									@if ($jumlah > 1)
 										{!!$chart_laporan_harian->container()!!}
 									@endif
 								
@@ -112,7 +112,7 @@
 					<br>
 					<div class="table-responsive">
 						<table class="table table-bordered text-center" id="chart">
-							<thead class="thead-dark">
+							<thead class="thead-light">
 								<tr>
 									<th>Nomor Nota</th>
 									<th>Produk</th>
@@ -157,7 +157,7 @@
 				<div class="card-body">
 					<h4 align="center" style="text-transform: uppercase; font-weight: bold;">Produk Terjual</h4><br>
 					<table class="table table-bordered">
-						<thead class="thead-dark">
+						<thead class="thead-light">
 							<tr>
 								<th>Produk</th>
 								<th>Jumlah</th>

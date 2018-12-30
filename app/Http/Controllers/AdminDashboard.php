@@ -91,14 +91,15 @@ class AdminDashboard extends Controller
             $dates = mktime(0,0,0,date('m'),date('d')-$i,date('Y'));
             $zu[$i] = date('d F', $dates);
         }
+        $from = date('Y-m-d');
+        $to = date('Y-m-d',strtotime('-1 days',strtotime($from)));
+
         $view_produk = DB::table('view_penjualan')
-                ->select('nama_produk', DB::raw('SUM(jumlah) as jumlah'),'id_produk')
-                ->where([
-                    ['status', 1],
-                    ['jumlah','>',0],
-                ])
-                ->groupBy('id_produk')
+                ->select('nama_produk','id_produk','status')
+                ->where('status', 1)
+                ->whereBetween(DB::raw('DATE(created_at)'),[$to,$from])
                 ->get();
+                
         $chart2 = new Sample;
         $chart2->labels(array_reverse($zu));
         for($i=0; $i<count($view_produk->pluck('id_produk')); $i++){

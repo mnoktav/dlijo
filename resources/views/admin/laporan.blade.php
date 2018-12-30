@@ -135,7 +135,7 @@
 					<br>
 					<div class="table-responsive">
 						<table class="table table-bordered text-center" id="chart">
-							<thead class="thead-dark">
+							<thead class="thead-light">
 								<tr>
 									<th>Nomor Nota</th>
 									<th>Produk</th>
@@ -180,7 +180,7 @@
 				<div class="card-body">
 					<h4 align="center" style="text-transform: uppercase; font-weight: bold;">Produk Terjual</h4><br>
 					<table class="table table-bordered">
-						<thead class="thead-dark">
+						<thead class="thead-light">
 							<tr>
 								<th>Produk</th>
 								<th>Jumlah</th>
